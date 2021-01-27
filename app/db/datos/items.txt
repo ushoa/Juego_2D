@@ -1,4 +1,4 @@
-(0, 'ORO', 'MONEDA', '', '', +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +1, 1, 'NINGUNA','ORO');
+(0, 'ORO', 'CONSUMIBLE', '', '', +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +1, 1, 'NINGUNA','ORO');
 (1, 'POTA CHICA HP', 'CONSUMIBLE', '', '', +0, +0, +10, +0, +0, +0, +0, +0, +0, +0, +0, +20, 1, 'NINGUNA','POTA_CHICA_HP');
 (2, 'POTA CHICA ENE', 'CONSUMIBLE', '', '', +0, +0, +0, +10, +0, +0, +0, +0, +0, +0, +0, +20, 1, 'NINGUNA','POTA_CHICA_ENE');
 (3, 'POTA GRANDE HP', 'CONSUMIBLE', '', '', +0, +0, +50, +0, +0, +0, +0, +0, +0, +0, +0, +50, 1, 'NINGUNA','POTA_GRANDE_HP');
@@ -24,10 +24,11 @@
 (34, 'ESPADA DOS MANOS HIERRO', 'ARMA', 'PESADA', 2, +0, +0, +0, +0, +150, +0, +0, +7, +0, +0, +0, +90000, 70, 'A');
 (35, 'ESPADA DOS MANOS ACERO', 'ARMA', 'PESADA', 2, +0, +0, +0, +0, +450, +0, +0, +8, +0, +0, +0, +180000, 80, 'S');
 (36, 'ESPADA DOS MANOS DIAMANTE', 'ARMA', 'PESADA', 2, +0, +0, +0, +0, +700, +0, +0, +10, +10, +10, +10, +1500000, 80, 'S');
-(40, 'ESPADA DOS MANOS MADERA', 'ARMA', 'PESADA', 2, +0, +0, +0, +0, +10, +0, +0, +0, +0, +0, +0, +100, 1, 'NINGUNA');
-(41, 'ARCO LARGO MADERA', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +15, +0, +0, +0, +0, +0, +0, +700, 10, 'D');
+(40, 'ARCO LARGO MADERA', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +15, +0, +0, +0, +0, +0, +0, +700, 10, 'D');
+(41, 'ARCO LARGO ESTANO', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +15, +0, +0, +0, +0, +0, +0, +700, 10, 'D');
 (42, 'ARCO LARGO COBRE', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +29, +0, +0, +0, +0, +0, +0, +2000, 25, 'C');
 (43, 'ARCO LARGO BRONCE', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +75, +0, +0, +4, +0, +0, +0, +12000, 40, 'B');
 (44, 'ARCO LARGO HIERRO', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +150, +0, +0, +7, +0, +0, +0, +90000, 70, 'A');
 (45, 'ARCO LARGO ACERO', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +450, +0, +0, +8, +0, +0, +0, +180000, 80, 'S');
 (46, 'ARCO LARGO DIAMANTE', 'ARMA', 'ARCO', 2, +0, +0, +0, +0, +700, +0, +0, +10, +10, +10, +10, +1500000, 80, 'S');
+(50, 'GUANTES DE TELA', 'ARMADURA', 'GUANTES', 2, +0, +0, +0, +0, +10, +0, +0, +0, +0, +0, +0, +15, 1, 'NINGUNA','');
