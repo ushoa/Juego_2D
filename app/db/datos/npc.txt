@@ -1,0 +1,8 @@
+(0,'Rey','rey','',50,50,0);
+(1,'Medico','medico','',0,0),2;
+(2,'Mercader','mercader','',0,0,2);
+(3,'General','general','',50,24,1);
+(4,'Herrero','herrero','',0,0,2);
+(5,'Guardia','guardia','',0,0,1);
+(6,'Guardia','guardia_arquero','',0,0,2);
+(7,'Guardia','guardia_lancero','',0,0,2);

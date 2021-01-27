@@ -1,0 +1,9 @@
+(0,1,'Rata','rata','...',1);
+(1,1,'Centinela','enemigo_centinela','...',2);
+(2,2,'Daguero','enemigo_daguero','...',4);
+(3,3,'Arquero','enemigo_arquero','...',4);
+(4,4,'Asesino','enemigo_asecino','...',10);
+(5,5,'Paladin','enemigo_paladin','...',10);
+(6,6,'Dualeno','enemigo_dualeno','...',10);
+(7,7,'Arco Largo','enemigo_arco_largo','...',10);
+(8,8,'Arco Corto','enemigo_arco_corto','...',10);
