@@ -8,8 +8,8 @@ fps=pygame.time.Clock()
 ###################
 # CONEXION CON DB #
 ###################
-#con=conexion.Conexion()
-#con.instalacionDB()
+con=conexion.Conexion()
+con.instalacionDB()
 
 lugarMapa=pygame.Surface((800,525))
 barraInfoPj=pygame.Surface((800,55))

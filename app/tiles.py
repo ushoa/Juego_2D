@@ -3,7 +3,7 @@ import sys, pygame
 class Tiles(pygame.sprite.Sprite):
     def __init__(self,hoja,tiles):
         super().__init__()
-        self.hoja=pygame.image.load(f"./app/img/{hoja}.png")
+        self.hoja=pygame.image.load(f"./app/sprites/{hoja}.png")
         self.hoja.set_clip(pygame.Rect(tiles['X'], tiles['Y'], tiles['WIDTH'], tiles['HEIGHT']))
         self.image=self.hoja.subsurface(self.hoja.get_clip())
         self.rect=self.image.get_rect()
@@ -16,7 +16,7 @@ class Tiles(pygame.sprite.Sprite):
 class Sprite(pygame.sprite.Sprite):
     def __init__(self,hoja,tiles,position):
         super().__init__()
-        self.sheet = pygame.image.load(f"./app/img/{hoja}.png")
+        self.sheet = pygame.image.load(f"./app/sprites/{hoja}.png")
         self.sheet.set_clip(pygame.Rect(tiles['X'], tiles['Y'], tiles['WIDTH'], tiles['HEIGHT']))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
