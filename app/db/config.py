@@ -7,20 +7,21 @@ nombreDB="JuegoDB"
 #LVL MAXIMO
 lvlMax=80
 
-#**********************************
-#DIMENSION DEL MAPA ***NO TOCAR***
-#SEGUN EL MAPA INVETADO
-filas=22
-columnas=22
-#**********************************
-
 #DIRECTORIO DE LAS TABLAS
 dirTablas="./app/db/tablas/"
 #DIRECTORIO DE LOS DATOS
 dirDatos="./app/db/datos/"
 #DIRECTORIO DE LAS TABLAS CUSTOM
-dirTablasCustom="./app/db/tablas/custom"
+dirTablasCustom="./app/db/tablas/custom/"
 #DIRECTORIO DE LOS DATOS CUSTOM
-dirDatosCustom="./app/db/datos/custom"
+dirDatosCustom="./app/db/datos/custom/"
 #DIRECTORIO DE LOS MAPAS
 dirMapas="./app/mapas/"
+
+#SPRITES
+#DIRECTORIO DE LAS ARMADURAS
+dirArmaduras="./app/sprites/armaduras/"
+#DIRECTORIO DE LAS ARMAS
+dirArmas="./app/sprites/armas/"
+#DIRECTORIO DE LOS ICONOS
+dirIconos="./app/sprites/iconos/"
