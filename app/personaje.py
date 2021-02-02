@@ -8,24 +8,48 @@ class Personaje(Sprite):
         self.tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
         super().__init__(self.hoja,self.tiles,position)
 
-class Test():
-    def __init__(self, position):
-        self.hoja='BODY_male'
-        self.hoja2='HEAD_chain_armor_helmet'
-        tiles={'X':17,'Y':15,'WIDTH':30,'HEIGHT':46}
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+           
+            if event.key == pygame.K_LEFT:
+                self.update('left')
+            if event.key == pygame.K_RIGHT:
+                self.update('right')
+            if event.key == pygame.K_UP:
+                self.update('up')
+            if event.key == pygame.K_DOWN:
+                self.update('down')
+ 
+        if event.type == pygame.KEYUP:  
+ 
+            if event.key == pygame.K_LEFT:
+                self.update('stand_left')            
+            if event.key == pygame.K_RIGHT:
+                self.update('stand_right')
+            if event.key == pygame.K_UP:
+                self.update('stand_up')
+            if event.key == pygame.K_DOWN:
+                self.update('stand_down')
+        
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print(pygame.mouse.get_pressed())
+            
+    def mochila(self):
+        pass
 
-        self.sheet = pygame.image.load(f"./app/img/{self.hoja}.png")
+class Equipamiento():
+    def __init__(self):
+        self.hoja='modelo'
+        tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
+
+        self.sheet = pygame.image.load(f"./app/sprite/{self.hoja}.png")
         self.sheet.set_clip(pygame.Rect(tiles['X'], tiles['Y'], tiles['WIDTH'], tiles['HEIGHT']))
         self.image = self.sheet.subsurface(self.sheet.get_clip())
         self.rect = self.image.get_rect()
-        self.rect.topleft = position
         
         self.sheet2 = pygame.image.load(f"./app/img/{self.hoja2}.png")
         self.sheet2.set_clip(pygame.Rect(tiles['X'], tiles['Y'], tiles['WIDTH'], tiles['HEIGHT']))
         self.image2 = self.sheet2.subsurface(self.sheet2.get_clip())
         self.rect2 = self.image.get_rect()
-        self.rect2.topleft = position
-        
-        self.rect.x=position[0]
-        self.rect.y=position[1]
+
 

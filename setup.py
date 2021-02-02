@@ -17,8 +17,11 @@ barraInfoPj=pygame.Surface((800,55))
 mapaMundi=mapa_mundi.Mapa(2,2)
 mapa=mapaMundi.getMapa()
 
+hoja='enemigo_1'
+tile={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
+
 pj=personaje.Personaje('Ivan',(100,200))
-#pj2=personaje.Test((500,200))
+pj2=tiles.Sprite(hoja,tile,(200,200))
 
 velocidad=50
 while True:
@@ -28,14 +31,16 @@ while True:
     ventana.blit(barraInfoPj,(200,545))
     mapaMundi.dibujarMapa(lugarMapa)
     lugarMapa.blit(pj.image,pj.rect)
+    lugarMapa.blit(pj2.image,pj2.rect)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
     pj.handle_event(event)
+    pj2.handle_event()
             
 
-    fps.tick(120)
+    fps.tick(30)
     pygame.display.set_caption(f'Juego en "2D"{fps}')
     pygame.display.flip()
     pygame.display.update()
