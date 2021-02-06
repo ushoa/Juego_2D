@@ -14,6 +14,75 @@ class Tiles(pygame.sprite.Sprite):
         self.rect.y+=y
 
 
+class Cursor(pygame.Rect):
+    def __init__(self):
+        pygame.Rect.__init__(self,0,0,5,5)
+
+    def update(self):
+        self.left,self.top=pygame.mouse.get_pos()
+
+
+class Panel(pygame.Surface):
+    def __init__(self,whidth,height,x,y,color):
+        super().__init__((whidth,height))
+        self.width=whidth
+        self.height=height
+        self.x=x
+        self.y=y
+        self.color=color
+
+        self.panel=pygame.Surface((self.width,self.height))
+        self.rect=self.panel.get_rect(topleft=(self.x,self.y))
+
+    def getPanel(self):
+        return self.panel
+
+    def dibujarPanel(self,stage):
+        stage.blit(self.panel,(self.x,self.y))
+        self.panel.fill(self.color)
+
+
+class Botones(pygame.Rect):
+    def __init__(self,texto,stage,x,y):
+        self.stage=stage
+        self.x=x
+        self.y=y
+        self.color=(0,95,136)
+        self.ancho=150
+        self.alto=40
+        
+        pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
+
+        self.fuente=pygame.font.SysFont('',25)
+        self.texto=self.fuente.render(texto,True,(255,255,255))
+        
+        self.rectangulo=pygame.Rect(self.stage.rect.x+self.x,self.stage.rect.y+self.y,self.ancho,self.alto)
+    
+    def draw(self):
+        pygame.draw.rect(self.stage.getPanel(),self.color,self)
+        self.stage.getPanel().blit(self.texto,(self.x+(self.width-self.texto.get_width())/2,self.y+(self.height-self.texto.get_height())/2))
+    
+    def normal(self):
+        self.color=(0,95,136)
+
+    def ober(self):
+        self.color=(52,128,160)
+
+    def click(self):    
+        self.color=(28,69,86)
+    
+    def update(self,event,cursor):
+        if cursor.colliderect(self.rectangulo):
+            self.ober()
+            if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                self.click()
+            else:
+                self.normal()
+        else:
+            self.normal()
+    
+
+
 class Sprite(pygame.sprite.Sprite):
     def __init__(self,hoja,tiles,position):
         super().__init__()
@@ -26,6 +95,8 @@ class Sprite(pygame.sprite.Sprite):
 
         self.tiempo=0
         self.distancia=0
+        self.direccion=['left','right','up','down']
+        self.dir='left'
         
         #self.left_states = { 0: (0, 76, 52, 76), 1: (52, 76, 52, 76), 2: (156, 76, 52, 76) }
         self.left_states = { 0: (18,588,46,47), 1: (82,589,28,46), 2: (146,588,28,46), 3: (210,588,28,47), 4: (274,588,29,50), 5: (338,589,30,49), 6: (402,588,29,50), 7: (466,588,29,50), 8: (530,588,29,50) }
@@ -73,18 +144,26 @@ class Sprite(pygame.sprite.Sprite):
  
     def handle_event(self):
         self.move=random.randint(0, 1)
-        self.direccion=['left','right','up','down']
-        self.dir=random.choice(self.direccion)
-        self.tiempo+=1
+        self.setDireccion()
 
         if self.move==1:
-
             while self.distancia<5:
                 self.update(self.dir)
                 self.distancia+=1
             self.distancia=0
+
+    def setDireccion(self):
+        if self.tiempo==5:
+            self.dir=random.choice(self.direccion)
+            self.tiempo=0
+        else:
+            self.tiempo+=1
         
-        print(self.move,self.distancia,self.dir)
+
+
+    #original
+    #def handle_event(self):
+        #print(self.move,self.distancia,self.dir)
 
         #if event.type == pygame.KEYDOWN:
         #   

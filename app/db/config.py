@@ -7,6 +7,10 @@ nombreDB="JuegoDB"
 #LVL MAXIMO
 lvlMax=80
 
+#DIMENSION PANTALLA
+pantallaAncho=1200
+pantallaAlto=600
+
 #DIRECTORIO DE LAS TABLAS
 dirTablas="./app/db/tablas/"
 #DIRECTORIO DE LOS DATOS

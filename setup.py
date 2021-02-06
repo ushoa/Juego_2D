@@ -1,9 +1,9 @@
 import sys, pygame
 from app.db import conexion,read,config
-from app import tiles,mapa_mundi,personaje
+from app import tiles,mapa_mundi,personaje,menu
 
 pygame.init()
-ventana=pygame.display.set_mode((1200,600))
+ventana=pygame.display.set_mode((config.pantallaAncho,config.pantallaAlto))
 fps=pygame.time.Clock()
 ###################
 # CONEXION CON DB #
@@ -11,8 +11,13 @@ fps=pygame.time.Clock()
 #con=conexion.Conexion()
 #con.instalacionDB()
 
+cursor=tiles.Cursor()
+
 lugarMapa=pygame.Surface((800,525))
-barraInfoPj=pygame.Surface((800,55))
+barraInfoPj=pygame.Surface((800,75))
+
+mp=menu.MenuPrincipal()
+
 
 mapaMundi=mapa_mundi.Mapa(2,2)
 mapa=mapaMundi.getMapa()
@@ -24,23 +29,33 @@ pj=personaje.Personaje('Ivan',(100,200))
 pj2=tiles.Sprite(hoja,tile,(200,200))
 
 velocidad=50
+ventana.fill((50,50,100))
 while True:
-    ventana.fill((50,50,100))
     #mapa.draw(ventana)
-    ventana.blit(lugarMapa,(200,20))
-    ventana.blit(barraInfoPj,(200,545))
+    ventana.blit(lugarMapa,(200,0))
+    ventana.blit(barraInfoPj,(200,525))
+    mp.superficie.dibujarPanel(ventana)
+
+    for b in mp.listaBtns:
+        b[0].draw()
+
     mapaMundi.dibujarMapa(lugarMapa)
     lugarMapa.blit(pj.image,pj.rect)
     lugarMapa.blit(pj2.image,pj2.rect)
+
+    cursor.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if mp.superficie.rect.colliderect(cursor):
+            mp.seleccion(event,cursor)
+
     pj.handle_event(event)
-    pj2.handle_event()
+    #pj2.handle_event()
             
 
-    fps.tick(30)
+    fps.tick(60)
     pygame.display.set_caption(f'Juego en "2D"{fps}')
     pygame.display.flip()
     pygame.display.update()

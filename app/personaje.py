@@ -32,8 +32,9 @@ class Personaje(Sprite):
                 self.update('stand_down')
         
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pressed())
-            
+            #print(pygame.mouse.get_pressed())
+            pass
+
     def mochila(self):
         pass
 
