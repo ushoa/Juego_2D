@@ -76,9 +76,9 @@ class Botones(pygame.Rect):
             self.ober()
             if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 self.click()
-            else:
+            if event.type==pygame.MOUSEBUTTONUP and event.button==1:
                 self.normal()
-        else:
+        elif not cursor.colliderect(self.rectangulo):
             self.normal()
     
 

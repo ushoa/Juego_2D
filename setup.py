@@ -13,45 +13,35 @@ fps=pygame.time.Clock()
 
 cursor=tiles.Cursor()
 
-lugarMapa=pygame.Surface((800,525))
-barraInfoPj=pygame.Surface((800,75))
+#lugarMapa=pygame.Surface((800,525))
+#barraInfoPj=pygame.Surface((800,75))
 
-mp=menu.MenuPrincipal()
+mp=menu.MenuPrincipal(ventana)
+op=menu.opcion_config()
+#mapaMundi=mapa_mundi.Mapa(2,2)
+#mapa=mapaMundi.getMapa()
 
-
-mapaMundi=mapa_mundi.Mapa(2,2)
-mapa=mapaMundi.getMapa()
-
-hoja='enemigo_1'
-tile={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
-
-pj=personaje.Personaje('Ivan',(100,200))
-pj2=tiles.Sprite(hoja,tile,(200,200))
+#pj=personaje.Personaje('Ivan',(100,200))
 
 velocidad=50
 ventana.fill((50,50,100))
 while True:
     #mapa.draw(ventana)
-    ventana.blit(lugarMapa,(200,0))
-    ventana.blit(barraInfoPj,(200,525))
-    mp.superficie.dibujarPanel(ventana)
+    #ventana.blit(lugarMapa,(200,0))
+    #ventana.blit(barraInfoPj,(200,525))
 
-    for b in mp.listaBtns:
-        b[0].draw()
-
-    mapaMundi.dibujarMapa(lugarMapa)
-    lugarMapa.blit(pj.image,pj.rect)
-    lugarMapa.blit(pj2.image,pj2.rect)
-
+    #mapaMundi.dibujarMapa(lugarMapa)
+    #lugarMapa.blit(pj.image,pj.rect)
+    #lugarMapa.blit(pj2.image,pj2.rect)
     cursor.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if mp.superficie.rect.colliderect(cursor):
-            mp.seleccion(event,cursor)
+        mp.show(event,cursor)
 
-    pj.handle_event(event)
+    #pj.handle_event(event)
     #pj2.handle_event()
             
 
