@@ -1,5 +1,5 @@
 #from .datos import clases,items
-from .config import nombreDB,dirTablas,dirDatos
+from .config import nombreDB,dirTablas,dirDatos,dirUserTabla,dirSave
 from os.path import basename,splitext
 from os import listdir
 from io import open
@@ -9,23 +9,23 @@ from .read import  nombreSinExtencion
 class Conexion():
     def __init__(self):
         self.__db=nombreDB
-        self.__conn=sqlite3.connect(f'app/db/{self.__db}')
-        self.__cursor=self.__conn.cursor()
+        self._conn=sqlite3.connect(f'app/db/{self.__db}')
+        self._cursor=self._conn.cursor()
 
-    def close(self): self.__conn.close()
+    def close(self): self._conn.close()
 
     def instalacionDB(self):
-        self.crearTablas()
+        self.crearTablas(dirTablas)
         self.insetarDatos()
         self.close()
 
-    def crearTablas(self):
-        self.__tablas=listdir(dirTablas)
+    def crearTablas(self,Tablas):
+        self.__tablas=listdir(Tablas)
         i=0
         for inx in self.__tablas:
-            sql=open(dirTablas+inx).read()
+            sql=open(Tablas+inx).read()
             try:
-                self.__cursor.execute(str(sql))
+                self._cursor.execute(str(sql))
                 self.__tablas[i]=nombreSinExtencion(inx)
                 print(f"Se creo la tabla {self.__tablas[i].upper() } exitosamente")
             except Exception as e:
@@ -52,8 +52,8 @@ class Conexion():
                     if(e==';'):
                         escribir=False
                         try:
-                            self.__cursor.execute("INSERT INTO "+datos[i].upper()+" VALUES "+char)
-                            self.__conn.commit()
+                            self._cursor.execute("INSERT INTO "+datos[i].upper()+" VALUES "+char)
+                            self._conn.commit()
                             print(f'Se agrego: {char}')
                         except Exception as e:
                             print(e)
@@ -66,28 +66,32 @@ class Conexion():
             i+=1
 
     def getAll(self,tabla):
-        self.__cursor.execute("SELECT * FROM "+tabla)
-        datos=self.__cursor.fetchall()
+        self._cursor.execute("SELECT * FROM "+tabla)
+        datos=self._cursor.fetchall()
         self.close()
-        return self.setiarAll(datos,self.__cursor.description)
+        return self.setiarAll(datos,self._cursor.description)
 
     def getDatos(self,tabla,col,valor,condicion='='):
         sql=f"SELECT * FROM {tabla} WHERE {col} {condicion} '{valor}'"
         #print(sql)
-        self.__cursor.execute(sql)
-        datos=self.__cursor.fetchall()
-        #cols=self.__cursor.description
+        self._cursor.execute(sql)
+        datos=self._cursor.fetchall()
+        #cols=self._cursor.description
         self.close()
-        return self.setiarFila(datos,self.__cursor.description)
+        return self.setiarFila(datos,self._cursor.description)
 
     def getDatosById(self,tabla,valor,condicion='='):
-        sql=f"SELECT * FROM {tabla} WHERE ID {condicion} '{valor}'"
-        #print(sql)
-        self.__cursor.execute(sql)
-        datos=self.__cursor.fetchall()
-        #cols=self.__cursor.description
+        sql=f"SELECT * FROM {tabla} WHERE ID {condicion} {valor}"
+        print(sql)
+        try:
+            self._cursor.execute(sql)
+        except:
+            pass
+        datos=self._cursor.fetchall()
+        #cols=self._cursor.description
         self.close()
-        return self.setiarFila(datos,self.__cursor.description)
+        return self.setiarFila(datos,self._cursor.description)
+
 
     def setiarFila(self,datos,cols):
         fila={}
@@ -112,8 +116,38 @@ class Conexion():
             fila={}
         return array
 
-class UsuarioDB(Conexion):
-    def __init__(self,user):
-        super.__init__()
-        self.__db=user
-        self.__conn=sqlite3.connect(f'app/db/save/{self.__db}')
+class CargarPartida(Conexion):
+    def __init__(self):
+        super().__init__()
+        self.partidas=[]
+        for save in listdir(dirSave):
+            self.partidas.append(nombreSinExtencion(save))
+    
+    def Cargar(self,nombre):
+        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
+        self._cursor=self._conn.cursor()
+        p=self.getAll('PERSONAJE')
+        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
+        self._cursor=self._conn.cursor()
+        i=self.getAll('INVENTARIO')
+        self.close()
+        return (p,i)
+
+class CrearPartida(Conexion):
+    def __init__(self,nombre):
+        super().__init__()
+        self.nombre=nombre
+        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
+        self._cursor=self._conn.cursor()
+        self.crearTablas(dirUserTabla)
+        self._cursor.execute("INSERT OR IGNORE INTO PERSONAJE VALUES ('"+nombre+"',1,0,1,0,0,400,212,'castillo')")
+        self._cursor.execute("INSERT OR IGNORE INTO INVENTARIO VALUES (0,200,0)")
+        self._conn.commit()
+    
+    def getPartida(self):
+        p=self.getAll('PERSONAJE')
+        self._conn=sqlite3.connect(f'app/db/save/{self.nombre}')
+        self._cursor=self._conn.cursor()
+        i=self.getAll('INVENTARIO')
+        self.close()
+        return (p,i)

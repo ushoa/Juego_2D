@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `PERSONAJE` (
+  `NOMBRE`  TEXT(10) NOT NULL,
+  `ID_CLASE` INT(4),
+  `EXP` INT(9),
+  `LVL` INT(9),
+  `HP` INT(9),
+  `ENE` INT(9),
+  `X` INT(5),
+  `Y` INT(5),
+  `MAPA` TEXT(50),
+  PRIMARY KEY (`NOMBRE`)
+)

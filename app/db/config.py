@@ -1,3 +1,6 @@
+import sys, pygame
+
+pygame.init()
 #CARACTERISTICAS DEL JUEGO
 exp=1
 drop=1
@@ -11,6 +14,8 @@ lvlMax=80
 pantallaAncho=1200
 pantallaAlto=600
 
+ventana=pygame.display.set_mode((pantallaAncho,pantallaAlto))
+
 #DIRECTORIO DE LAS TABLAS
 dirTablas="./app/db/tablas/"
 #DIRECTORIO DE LOS DATOS
@@ -21,6 +26,10 @@ dirTablasCustom="./app/db/tablas/custom/"
 dirDatosCustom="./app/db/datos/custom/"
 #DIRECTORIO DE LOS MAPAS
 dirMapas="./app/mapas/"
+#DIRECTORIO DE TABLA NUEVO USUARIO
+dirUserTabla="./app/db/tablaUser/"
+#DIRECTORIO DE PARTIDAS GUARDADAS
+dirSave="./app/db/save/"
 
 #SPRITES
 #DIRECTORIO DE LAS ARMADURAS

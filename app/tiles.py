@@ -41,6 +41,70 @@ class Panel(pygame.Surface):
         stage.blit(self.panel,(self.x,self.y))
         self.panel.fill(self.color)
 
+class PanelConTexto(Panel):
+    def __init__(self,whidth,height,x,y,color,texto,textoColor,textoX,textoY):
+        super().__init__(whidth,height,x,y,color)
+        self.texto=texto
+        self.tx,self.ty=textoX,textoY
+        self.colorTexto=textoColor
+        self.fuente=pygame.font.SysFont(' ',25)
+        self.texto_show=self.fuente.render(self.texto,True,self.colorTexto)
+    
+    def dibujarPanel(self,stage):
+        #stage.blit(self.panel,(self.x,self.y))
+        self.panel.fill(self.color)
+        stage.blit(self.texto_show,(self.tx,self.ty))
+
+class Input(pygame.Rect):
+    def __init__(self,stage,ancho,alto,x,y,color):
+        self.stage=stage
+        self.ancho=ancho
+        self.alto=alto
+        self.x=x
+        self.y=y
+        self.color=pygame.Color(color)
+        self.color_normal=self.color
+        self.clic=False
+        
+        self.texto=''
+        self.fuente=pygame.font.SysFont(' ',25)
+        self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
+
+        pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
+        self.rectangulo=pygame.Rect(self.stage.rect.x+self.x,self.stage.rect.y+self.y,self.ancho,self.alto)
+    
+
+    def draw(self):
+        pygame.draw.rect(self.stage.getPanel(),self.color,self)
+        self.stage.getPanel().blit(self.texto_show,(self.x+10,(self.y+(self.alto-self.fuente.size(self.texto)[1])/2)))
+
+    def click(self):
+        try:
+            self.color=(self.color.r+28,self.color.g-26,self.color.b+50)
+        except:
+            pass
+
+    def normal(self):
+        self.color=self.color_normal
+
+    def update(self,event,cursor):
+        colicion=cursor.colliderect(self.rectangulo)
+        if colicion and event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+            self.clic=True
+            self.click()
+        elif not colicion and event.type==pygame.MOUSEBUTTONUP and event.button==1:
+            self.normal()
+            self.clic=False
+        if event.type == pygame.KEYDOWN:
+            if self.clic:
+                if event.key == pygame.K_RETURN:
+                    self.texto = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.texto = self.texto[:-1]
+                else:
+                    self.texto += event.unicode
+        self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
+
 
 class Botones(pygame.Rect):
     def __init__(self,texto,stage,x,y):
@@ -50,17 +114,18 @@ class Botones(pygame.Rect):
         self.color=(0,95,136)
         self.ancho=150
         self.alto=40
-        
+        self.clic=False
+        self.texto=texto
         pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
 
-        self.fuente=pygame.font.SysFont('',25)
-        self.texto=self.fuente.render(texto,True,(255,255,255))
+        self.fuente=pygame.font.SysFont(' ',25)
+        self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
         
         self.rectangulo=pygame.Rect(self.stage.rect.x+self.x,self.stage.rect.y+self.y,self.ancho,self.alto)
     
     def draw(self):
         pygame.draw.rect(self.stage.getPanel(),self.color,self)
-        self.stage.getPanel().blit(self.texto,(self.x+(self.width-self.texto.get_width())/2,self.y+(self.height-self.texto.get_height())/2))
+        self.stage.getPanel().blit(self.texto_show,(self.x+(self.width-self.texto_show.get_width())/2,self.y+(self.height-self.texto_show.get_height())/2))
     
     def normal(self):
         self.color=(0,95,136)
@@ -68,19 +133,41 @@ class Botones(pygame.Rect):
     def ober(self):
         self.color=(52,128,160)
 
-    def click(self):    
+    def click(self):
         self.color=(28,69,86)
     
     def update(self,event,cursor):
-        if cursor.colliderect(self.rectangulo):
+        colicion=cursor.colliderect(self.rectangulo)
+        if colicion:
             self.ober()
             if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                self.clic=True
                 self.click()
             if event.type==pygame.MOUSEBUTTONUP and event.button==1:
                 self.normal()
-        elif not cursor.colliderect(self.rectangulo):
+                self.clic=False
+        else:
             self.normal()
-    
+            self.clic=False
+
+    def CambiarTexto(self):
+        pass
+
+class BotonesCambiaTexto(Botones):
+    def __init__(self,texto,stage,x,y):
+        self.i=0
+        super().__init__('texto',stage,x,y)
+        self.texto=texto
+        self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
+
+    def CambiarTexto(self):
+        if self.clic:
+            if self.i+1>len(self.texto)-1:
+                self.i=0
+            else:
+                self.i+=1
+        self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
+
 
 
 class Sprite(pygame.sprite.Sprite):

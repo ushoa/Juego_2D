@@ -35,6 +35,7 @@ class Mapa(MapaMundy):
         self.__array=self.getContenedorMapa()
         for f in range(len(self.__array)):
             for c in range(len(self.__array[f])):
+                #print(f,'.',c,' = ',self.__array[f][c])
                 con=conexion.Conexion()
                 id=con.getDatosById(self.__hoja,self.__array[f][c])
                 tile=Tiles(self.__hoja,id)
