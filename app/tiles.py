@@ -118,6 +118,7 @@ class Botones(pygame.Rect):
         self.texto=texto
         pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
 
+
         self.fuente=pygame.font.SysFont(' ',25)
         self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
         
@@ -135,6 +136,9 @@ class Botones(pygame.Rect):
 
     def click(self):
         self.color=(28,69,86)
+
+    def getClick(self):
+        return self.clic
     
     def update(self,event,cursor):
         colicion=cursor.colliderect(self.rectangulo)
@@ -161,12 +165,15 @@ class BotonesCambiaTexto(Botones):
         self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
     def CambiarTexto(self):
-        if self.clic:
-            if self.i+1>len(self.texto)-1:
-                self.i=0
-            else:
-                self.i+=1
-        self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
+        for event in pygame.event.get():
+            mouse_buttons = pygame.mouse.get_pressed()
+            if mouse_buttons[0]:
+                if self.i+1>len(self.texto)-1:
+                    self.i=0
+                else:
+                    self.i+=1
+                self.clic=False
+            self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
 
 

@@ -12,11 +12,7 @@ fps=pygame.time.Clock()
 #con=conexion.Conexion()
 #con.instalacionDB()
 
-def funcionUno():
-    print('Funcion Uno')
-
-def funcionDos(algo):
-    print('funcion Dos',algo)
+stage=stage.Stage()
 
 
 velocidad=50
@@ -27,7 +23,11 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        stage.juego(event)
+        evento=event
+        mouse_buttons = pygame.mouse.get_pressed()
+        #if mouse_buttons[0]:
+            #print("You pressed 'q'")
+    stage.update(evento)
 
     fps.tick(60)
     pygame.display.set_caption(f'Juego en "2D"{fps}')

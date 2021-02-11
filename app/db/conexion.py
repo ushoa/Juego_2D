@@ -82,7 +82,7 @@ class Conexion():
 
     def getDatosById(self,tabla,valor,condicion='='):
         sql=f"SELECT * FROM {tabla} WHERE ID {condicion} {valor}"
-        print(sql)
+        #print(sql)
         try:
             self._cursor.execute(sql)
         except:

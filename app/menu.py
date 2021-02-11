@@ -32,10 +32,6 @@ class Menu():
         for inp in self.input_box:
             inp['input']=Input(self.superficie,inp['ancho'],inp['alto'],inp['x'],inp['y'],inp['color'])
 
-    def crearBotonesSecundarios(self):
-        for btn in self.botonesSecundarios:
-            btn['boton']=btn['boton'](btn['nombre'],self.superficie,btn['x'],btn['y'])
-
     def crearBotones(self):
         for btn in self.botones:
             btn['boton']=btn['boton'](btn['nombre'],self.superficie,btn['x'],btn['y'])
@@ -124,6 +120,7 @@ class MenuPrincipal(Menu):
             if btn['estado']:
                 btn['funcion'].update(event,cursor)
                 btn['funcion'].show()
+                    
 
 
 class Opciones(Menu):
@@ -142,7 +139,6 @@ class Opciones(Menu):
 
     def getDatosPersonaje(self):
         return self.datosPersonaje
-        
 
 class opcion_nuevo(Opciones):
     def __init__(self):
@@ -177,6 +173,7 @@ class opcion_cargar(Opciones):
     
     def cargar(self,nombre):
         self.datosPersonaje=self.saves.Cargar(nombre)
+        print(self.datosPersonaje)
         self.accion=False
 
 class opcion_config(Opciones):
@@ -194,8 +191,9 @@ class opcion_config(Opciones):
 
     def resolucion(self):
         for btn in self.botones:
-            if type(btn['boton'].texto) is list:
-                btn['boton'].CambiarTexto()
+            if btn['boton'].getClick():
+                if type(btn['boton'].texto) is list:
+                    btn['boton'].CambiarTexto()
 
     def volumen(self):
         print('volumen')
