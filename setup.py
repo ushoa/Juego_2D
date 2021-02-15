@@ -24,9 +24,6 @@ while True:
             pygame.quit()
             sys.exit()
         evento=event
-        mouse_buttons = pygame.mouse.get_pressed()
-        #if mouse_buttons[0]:
-            #print("You pressed 'q'")
     stage.update(evento)
 
     fps.tick(60)

@@ -45,9 +45,9 @@ class Stage():
 
         self.lugarMapa.blit(self.pj.image,self.pj.rect)
 
-    def update(self,evento):
+    def update(self,event):
         if self.menuActivo:
-            self.menuPrincipal(evento)
+            self.menuPrincipal(event)
             self.estadoMenu(self.mp)
         else:
             self.pantallaCarga()

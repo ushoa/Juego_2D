@@ -56,7 +56,7 @@ class PanelConTexto(Panel):
         stage.blit(self.texto_show,(self.tx,self.ty))
 
 class Input(pygame.Rect):
-    def __init__(self,stage,ancho,alto,x,y,color):
+    def __init__(self,texto,stage,x,y,ancho,alto,color):
         self.stage=stage
         self.ancho=ancho
         self.alto=alto
@@ -95,19 +95,19 @@ class Input(pygame.Rect):
         elif not colicion and event.type==pygame.MOUSEBUTTONUP and event.button==1:
             self.normal()
             self.clic=False
-        if event.type == pygame.KEYDOWN:
-            if self.clic:
-                if event.key == pygame.K_RETURN:
-                    self.texto = ''
-                elif event.key == pygame.K_BACKSPACE:
-                    self.texto = self.texto[:-1]
-                else:
-                    self.texto += event.unicode
+        if event.type == pygame.KEYDOWN and self.clic==True:
+            print(self.texto)
+            if event.key == pygame.K_RETURN:
+                self.texto = ''
+            elif event.key == pygame.K_BACKSPACE:
+                self.texto = self.texto[:-1]
+            else:
+                self.texto += event.unicode
         self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
 
 
 class Botones(pygame.Rect):
-    def __init__(self,texto,stage,x,y):
+    def __init__(self,texto,stage,x,y,ancho,alto,color):
         self.stage=stage
         self.x=x
         self.y=y
@@ -117,7 +117,6 @@ class Botones(pygame.Rect):
         self.clic=False
         self.texto=texto
         pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
-
 
         self.fuente=pygame.font.SysFont(' ',25)
         self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
@@ -158,22 +157,20 @@ class Botones(pygame.Rect):
         pass
 
 class BotonesCambiaTexto(Botones):
-    def __init__(self,texto,stage,x,y):
+    def __init__(self,texto,stage,x,y,ancho,alto,color):
         self.i=0
-        super().__init__('texto',stage,x,y)
+        super().__init__('texto',stage,x,y,ancho,alto,color)
         self.texto=texto
         self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
     def CambiarTexto(self):
-        for event in pygame.event.get():
-            mouse_buttons = pygame.mouse.get_pressed()
-            if mouse_buttons[0]:
-                if self.i+1>len(self.texto)-1:
-                    self.i=0
-                else:
-                    self.i+=1
-                self.clic=False
-            self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
+        if self.clic==True:
+            if self.i+1>len(self.texto)-1:
+                self.i=0
+            else:
+                self.i+=1
+            self.clic=False
+        self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
 
 
