@@ -38,7 +38,6 @@ class Mapa(MapaMundy):
                 #print(f,'.',c,' = ',self.__array[f][c])
                 con=conexion.Conexion()
                 id=con.getDatosById(self.__hoja,self.__array[f][c])
-                print(id)
                 tile=Tiles(self.__hoja,id)
                 tile.rect.x=c*25
                 tile.rect.y=f*25

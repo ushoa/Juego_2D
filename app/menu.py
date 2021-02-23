@@ -43,8 +43,7 @@ class Menu():
             btn['items'].update(event,cursor)
             mouse_buttons = pygame.mouse.get_pressed()
             if cursor.colliderect(btn['items'].rectangulo):
-                if mouse_buttons[0]:
-                    print('click')
+                if mouse_buttons[0] and btn['items'].action==1:
                     try:
                         btn['funcion']()
                     except:

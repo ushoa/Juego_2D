@@ -65,6 +65,7 @@ class Input(pygame.Rect):
         self.color=pygame.Color(color)
         self.color_normal=self.color
         self.clic=False
+        self.action=1
         
         self.texto=''
         self.fuente=pygame.font.SysFont(' ',25)
@@ -95,8 +96,7 @@ class Input(pygame.Rect):
         elif not colicion and event.type==pygame.MOUSEBUTTONUP and event.button==1:
             self.normal()
             self.clic=False
-        if event.type == pygame.KEYDOWN and self.clic==True:
-            print(self.texto)
+        if event.type == pygame.KEYDOWN and self.clic:
             if event.key == pygame.K_RETURN:
                 self.texto = ''
             elif event.key == pygame.K_BACKSPACE:
@@ -116,6 +116,7 @@ class Botones(pygame.Rect):
         self.alto=40
         self.clic=False
         self.texto=texto
+        self.action=0
         pygame.Rect.__init__(self,self.x,self.y,self.ancho,self.alto)
 
         self.fuente=pygame.font.SysFont(' ',25)
@@ -145,9 +146,11 @@ class Botones(pygame.Rect):
             self.ober()
             if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 self.clic=True
+                self.action+=1
                 self.click()
             if event.type==pygame.MOUSEBUTTONUP and event.button==1:
                 self.normal()
+                self.action=0
                 self.clic=False
         else:
             self.normal()
@@ -164,7 +167,7 @@ class BotonesCambiaTexto(Botones):
         self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
     def CambiarTexto(self):
-        if self.clic==True:
+        if self.action==1:
             if self.i+1>len(self.texto)-1:
                 self.i=0
             else:
