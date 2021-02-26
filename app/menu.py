@@ -153,7 +153,6 @@ class opcion_cargar(Opciones):
     
     def cargar(self,nombre):
         self.datosPersonaje=self.saves.Cargar(nombre)
-        print(self.datosPersonaje)
         self.accion=False
 
 class opcion_config(Opciones):

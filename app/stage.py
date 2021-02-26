@@ -13,9 +13,6 @@ class Stage():
         self.load_Map=False
         self.jugar=False
 
-    def estadoMenu(self,menu):
-        self.menuActivo=menu.getEstado()
-
     def menuPrincipal(self,event):
         self.cursor.update()
         self.mp.selfUpdate(event,self.cursor)
@@ -30,10 +27,11 @@ class Stage():
             self.barraInfoPj=tiles.Panel(800,75,200,255,(0,0,0))
             self.mapaMundi=mapa_mundi.Mapa(2,2)
             self.mapa=self.mapaMundi.getMapa()
-            self.lugarMapa.dibujarPanel(config.ventana)
-            self.barraInfoPj.dibujarPanel(self.lugarMapa.getPanel())
-            self.mapaMundi.dibujarMapa(self.lugarMapa)
             self.jugar=True
+        self.lugarMapa.dibujarPanel(config.ventana)
+        self.barraInfoPj.dibujarPanel(self.lugarMapa.getPanel())
+        self.mapaMundi.dibujarMapa(self.lugarMapa)
+        print(self.lugarMapa,self.barraInfoPj,self.mapaMundi)
 
     def loadMap(self):
         if self.load_Map==False:
@@ -48,12 +46,11 @@ class Stage():
 
         self.lugarMapa.blit(self.pj.image,self.pj.rect)
 
-    def update(self,event):
-        if self.menuActivo:
+    def update(self,event=''):
+        if self.mp.getEstado():
             self.menuPrincipal(event)
-            self.estadoMenu(self.mp)
         else:
-            self.pantallaCarga()
+            #self.pantallaCarga()
             self.juego()
             self.personaje()
 

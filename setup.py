@@ -24,7 +24,10 @@ while True:
             pygame.quit()
             sys.exit()
         evento=event
-    stage.update(evento)
+        stage.update(event)
+        if event.type==pygame.KEYDOWN:
+            print(evento.type)
+            print(event.unicode)
 
     fps.tick(60)
     pygame.display.set_caption(f'Juego en "2D"{fps}')
