@@ -31,18 +31,15 @@ class Mapa(MapaMundy):
     def __init__(self,x,y):
         super().__init__(x,y)
         self.__hoja='TILES'
-        #self.__mapa=pygame.sprite.Group()
         self.__array=self.getContenedorMapa()
         for f in range(len(self.__array)):
             for c in range(len(self.__array[f])):
-                #print(f,'.',c,' = ',self.__array[f][c])
                 con=conexion.Conexion()
                 id=con.getDatosById(self.__hoja,self.__array[f][c])
                 tile=Tiles(self.__hoja,id)
                 tile.rect.x=c*25
                 tile.rect.y=f*25
                 self.__array[f][c]=tile
-                #self.__mapa.add(tile)
 
     def getMapa(self):
         return self.__array

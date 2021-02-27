@@ -7,11 +7,9 @@ class Stage():
     def __init__(self):
         self.cursor=tiles.Cursor()
         self.mp=menu.MenuPrincipal()
-        self.carga=tiles.PanelConTexto(config.pantallaAncho,config.pantallaAlto,0,0,(0,0,0),'Cargando...',(255,255,255),config.pantallaAncho/2,config.pantallaAlto/2)
-        self.menuActivo=True
-        self.myEvento=1
         self.load_Map=False
         self.jugar=False
+        self.load_pj=False
 
     def menuPrincipal(self,event):
         self.cursor.update()
@@ -19,6 +17,11 @@ class Stage():
         self.datos=self.mp.getRetorno()
 
     def pantallaCarga(self):
+        if self.jugar==False:
+            self.carga=tiles.PanelConTexto(config.pantallaAncho,config.pantallaAlto,0,0,(0,0,0),'Cargando...',(255,255,255),config.pantallaAncho/2,config.pantallaAlto/2)
+        else:
+            self.carga=tiles.Panel(config.pantallaAncho,config.pantallaAlto,0,0,(0,0,0))
+
         self.carga.dibujarPanel(config.ventana)
 
     def juego(self):
@@ -30,8 +33,7 @@ class Stage():
             self.jugar=True
         self.lugarMapa.dibujarPanel(config.ventana)
         self.barraInfoPj.dibujarPanel(self.lugarMapa.getPanel())
-        self.mapaMundi.dibujarMapa(self.lugarMapa)
-        print(self.lugarMapa,self.barraInfoPj,self.mapaMundi)
+        self.mapaMundi.dibujarMapa(self.lugarMapa.getPanel())
 
     def loadMap(self):
         if self.load_Map==False:
@@ -40,18 +42,24 @@ class Stage():
             self.load_Map==True
 
     def personaje(self):
-        self.datosPj=self.datos[0]
-        self.datosInv=self.datos[1]
-        self.pj=personaje.Personaje(self.datosPj[0]['NOMBRE'],self.datosPj[0]['ID_CLASE'],self.datosPj[0]['EXP'],self.datosPj[0]['LVL'],self.datosPj[0]['HP'],self.datosPj[0]['ENE'],(self.datosPj[0]['X'],self.datosPj[0]['Y']))
+        if self.load_pj==False:
+            self.datosPj=self.datos[0]
+            self.datosInv=self.datos[1]
+            self.pj=personaje.Personaje(self.datosPj[0]['NOMBRE'],self.datosPj[0]['ID_CLASE'],self.datosPj[0]['EXP'],self.datosPj[0]['LVL'],self.datosPj[0]['HP'],self.datosPj[0]['ENE'],(self.datosPj[0]['X'],self.datosPj[0]['Y']))
+            self.load_pj=True
+        self.lugarMapa.getPanel().blit(self.pj.image,self.pj.rect)
 
-        self.lugarMapa.blit(self.pj.image,self.pj.rect)
+    def update(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if self.mp.getEstado():
+                self.menuPrincipal(event)
+            else:
+                self.pantallaCarga()
+                self.juego()
 
-    def update(self,event=''):
-        if self.mp.getEstado():
-            self.menuPrincipal(event)
-        else:
-            #self.pantallaCarga()
-            self.juego()
-            self.personaje()
-
+                self.personaje()
+                self.pj.handle_event(event)
     
