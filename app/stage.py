@@ -14,7 +14,7 @@ class Stage():
     def menuPrincipal(self,event):
         self.cursor.update()
         self.mp.selfUpdate(event,self.cursor)
-        self.datos=self.mp.getRetorno()
+        self.datos=self.mp.retorno
 
     def pantallaCarga(self):
         if self.jugar==False:
@@ -54,7 +54,7 @@ class Stage():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if self.mp.getEstado():
+            if self.mp.retorno:
                 self.menuPrincipal(event)
             else:
                 self.pantallaCarga()

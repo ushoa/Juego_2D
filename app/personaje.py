@@ -14,7 +14,7 @@ class Enemigo(SpriteMobile):
         self.hoja=hoja
         self.nombre=nombre
         self.tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
-        super().__init__(self.nombre,self.hoja,position)
+        super().__init__(self.hoja,self.tiles,position)
         self.__ID=0
         self.__clase=clase
         self.__STR=0

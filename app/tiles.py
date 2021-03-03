@@ -215,15 +215,15 @@ class SpriteMobile(Tiles):
  
     def clip(self, clipped_rect):
         if type(clipped_rect) is dict:
-            self.sheet.set_clip(pygame.Rect(self.get_frame(clipped_rect)))
+            self.hoja.set_clip(pygame.Rect(self.get_frame(clipped_rect)))
         else:
-            self.sheet.set_clip(pygame.Rect(clipped_rect))
+            self.hoja.set_clip(pygame.Rect(clipped_rect))
         return clipped_rect
        
     def update(self, direction):
 
         self.clip(self.moves[direction]) 
-        self.image = self.sheet.subsurface(self.sheet.get_clip())
+        self.image = self.hoja.subsurface(self.hoja.get_clip())
  
     def handle_event(self):
         self.move=random.randint(0, 100)

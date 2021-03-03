@@ -140,8 +140,8 @@ class CrearPartida(Conexion):
         self._conn=sqlite3.connect(f'app/db/save/{nombre}')
         self._cursor=self._conn.cursor()
         self.crearTablas(dirUserTabla)
-        self._cursor.execute("INSERT OR IGNORE INTO PERSONAJE VALUES ('"+nombre+"',1,0,1,0,0,400,212,'castillo')")
-        self._cursor.execute("INSERT OR IGNORE INTO INVENTARIO VALUES (0,200,0)")
+        self._cursor.execute(f"INSERT OR IGNORE INTO PERSONAJE VALUES ('{nombre}',1,0,1,0,0,400,212,'castillo')")
+        self._cursor.execute("INSERT OR IGNORE INTO INVENTARIO VALUES (0,200,0,0)")
         self._conn.commit()
     
     def getPartida(self):

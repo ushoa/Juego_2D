@@ -58,21 +58,20 @@ class Menu():
         for btn in self.items:
             btn['estado']=False
 
-    def clickBoton(self,btn):
-        estado=btn['items'].clic
-        return estado
-
     def check(self):
         for btn in self.items:
             try:
-                b=btn['funcion'].getAccion()
-                retorno=btn['funcion'].getDatosPersonaje()
+                self.estado=btn['funcion']().getAccion()
+                self.retorno=btn['funcion']().getDatosPersonaje()
+                print(btn['funcion']())
             except:
-                b=True
-                retorno=(0,0)
-            if b==False:
-                self.retorno=retorno
-                self.estado=False
+                try:
+                    self.estado=btn['funcion'].getAccion()
+                    self.retorno=btn['funcion'].getDatosPersonaje()
+                except:
+                    print('nada')
+                    pass
+
 
     def show(self):
         self.superficie.dibujarPanel(self.ventana)
@@ -93,9 +92,6 @@ class MenuPrincipal(Menu):
             {'items':Botones,'nombre':'Salir','funcion':opcion_salir(),'value':'valor','estado':False,'x':20,'y':380,'ancho':150,'alto':40,'color':(0,95,136)}
         ]
         self.crearItems()
-
-    def destroy(self):
-        self=None
 
     def selfUpdate(self,event,cursor):
         self.update(event,cursor)
