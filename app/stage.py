@@ -54,7 +54,7 @@ class Stage():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if self.mp.retorno:
+            if self.mp.getEstado():
                 self.menuPrincipal(event)
             else:
                 self.pantallaCarga()
