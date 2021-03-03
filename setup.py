@@ -17,8 +17,9 @@ stage=stage.Stage()
 config.ventana.fill((50,50,100))
 while True:
 
-    stage.update()
-
+    #stage.update()
+    event=pygame.event.pump()
+    print(event)
     fps.tick(60)
     pygame.display.set_caption(f'Juego en "2D"{fps}')
     pygame.display.flip()

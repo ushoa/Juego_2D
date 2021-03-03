@@ -45,7 +45,7 @@ class Stage():
         if self.load_pj==False:
             self.datosPj=self.datos[0]
             self.datosInv=self.datos[1]
-            self.pj=personaje.Personaje(self.datosPj[0]['NOMBRE'],self.datosPj[0]['ID_CLASE'],self.datosPj[0]['EXP'],self.datosPj[0]['LVL'],self.datosPj[0]['HP'],self.datosPj[0]['ENE'],(self.datosPj[0]['X'],self.datosPj[0]['Y']))
+            self.pj=personaje.Jugador(self.datosPj[0]['NOMBRE'],self.datosPj[0]['ID_CLASE'],self.datosPj[0]['EXP'],self.datosPj[0]['LVL'],self.datosPj[0]['HP'],self.datosPj[0]['ENE'],(self.datosPj[0]['X'],self.datosPj[0]['Y']))
             self.load_pj=True
         self.lugarMapa.getPanel().blit(self.pj.image,self.pj.rect)
 

@@ -1,18 +1,22 @@
 import sys, pygame
-from .tiles import Sprite
+from .tiles import SpriteMobile,SpriteStand
 from .db import conexion
 
-class Personaje(Sprite):
-    def __init__(self, nombre,clase,exp,lvl,hp,ene,position):
-        self.hoja='modelo'
+class Npc(SpriteStand):
+    def __init__(self,nombre,hoja,position):
+        self.hoja=hoja
+        self.nombre=nombre
         self.tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
         super().__init__(self.hoja,self.tiles,position)
-        self.__tabla='CLASES'
-        self.__columna='CLASE'
+
+class Enemigo(SpriteMobile):
+    def __init__(self,nombre,hoja,clase,exp,lvl,hp,ene,position):
+        self.hoja=hoja
+        self.nombre=nombre
+        self.tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
+        super().__init__(self.nombre,self.hoja,position)
         self.__ID=0
         self.__clase=clase
-        self.__nombre=''
-        self.__nombrePj=nombre
         self.__STR=0
         self.__DEF=0
         self.__CON=0
@@ -31,6 +35,14 @@ class Personaje(Sprite):
         self.__crit=0
         self.__pCrit=0
         self.__exp=exp
+
+
+class Jugador(Enemigo):
+    def __init__(self,nombre,clase,exp,lvl,hp,ene,position):
+        self.hoja='modelo'
+        super().__init__(nombre,self.hoja,clase,exp,lvl,hp,ene,position)
+        self.__tabla='CLASES'
+        self.__columna='CLASE'
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -61,6 +73,9 @@ class Personaje(Sprite):
 
     def mochila(self):
         pass
+
+
+
 
 class Equipamiento():
     def __init__(self):
