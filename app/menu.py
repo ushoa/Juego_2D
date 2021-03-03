@@ -134,7 +134,7 @@ class opcion_nuevo(Opciones):
         self.crearItems()
 
     def crear(self):
-        nuevo=conexion.CrearPartida(self.value)
+        nuevo=conexion.CrearPartida(self.items[0]['items'].texto)
         self.datosPersonaje=nuevo.getPartida()
         self.accion=False
 
