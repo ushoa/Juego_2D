@@ -37,7 +37,6 @@ class Menu():
         pass
 
     def updateItems(self,event,cursor):
-        self.check()
         pygame.event.pump()
         for btn in self.items:
             btn['items'].update(event,cursor)
@@ -51,6 +50,7 @@ class Menu():
                             btn['funcion'](btn['value'])
                         except:
                             btn['funcion']
+                    self.check()
                     self.falseAllItems()
                     btn['estado']=True
 
