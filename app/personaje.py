@@ -3,11 +3,14 @@ from .tiles import SpriteMobile,SpriteStand
 from .db import conexion
 
 class Npc(SpriteStand):
-    def __init__(self,nombre,hoja,position):
-        self.hoja=hoja
+    def __init__(self,nombre,hoja,position,tile):
+        self.hoja='/npc/'+hoja
         self.nombre=nombre
-        self.tiles={'X':18,'Y':588,'WIDTH':46,'HEIGHT':47}
-        super().__init__(self.hoja,self.tiles,position)
+        self.tile=tile
+        super().__init__(self.hoja,self.tile,position)
+
+    def interaccion(self):
+        print('Mensaje de prueba para corroborar coliciones')
 
 class Enemigo(SpriteMobile):
     def __init__(self,nombre,hoja,clase,exp,lvl,hp,ene,position):

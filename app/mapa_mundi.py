@@ -23,9 +23,12 @@ class MapaMundy():
         [esquina_externa_so,pasillo_sur_externo_A,pasillo_sur_externo_B,pasillo_sur_externo_C,esquina_externa_se]
         ]
         self.__contenedorMapa=self.__mapaMundi[self.__y][self.__x].mapa
-
+        
     def getContenedorMapa(self):
         return self.__contenedorMapa
+
+    def npcMapa(self):
+        return self.__mapaMundi[self.__y][self.__x].npc
 
 class Mapa(MapaMundy):
     def __init__(self,x,y):

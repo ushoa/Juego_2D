@@ -50,7 +50,7 @@ class Menu():
                             btn['funcion'](btn['value'])
                         except:
                             btn['funcion']
-                    self.check()
+                    #self.check()
                     self.falseAllItems()
                     btn['estado']=True
 
@@ -95,7 +95,18 @@ class MenuPrincipal(Menu):
                 btn['funcion'].update(event,cursor)
                 btn['funcion'].show()
                     
+    def getEstado(self):
+        for item in self.items:
+            if item['funcion'].estado==False:
+                self.estado=False
+                return self.estado
+        return True
 
+    def getRetorno(self):
+        for item in self.items:
+            if item['funcion'].datosPersonaje!=(0,0):
+                return item['funcion'].datosPersonaje
+        return (0,0)
 
 class Opciones(Menu):
     def __init__(self):

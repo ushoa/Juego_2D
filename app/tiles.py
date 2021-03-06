@@ -176,8 +176,9 @@ class BotonesCambiaTexto(Botones):
         self.texto_show=self.fuente.render(self.texto[self.i],True,(255,255,255))
 
 class SpriteStand(Tiles):
-    def __init__(self,hoja,tiles,position):
-        super().__init__(hoja,tiles)
+    def __init__(self,hoja,tile,position):
+        super().__init__(hoja,tile)
+        self.rect.midbottom = position
 
 
 class SpriteMobile(Tiles):
@@ -222,7 +223,16 @@ class SpriteMobile(Tiles):
        
     def update(self, direction):
 
-        self.clip(self.moves[direction]) 
+        self.clip(self.moves[direction])
+        if direction=='up':
+            self.rect.y-=5
+        elif direction=='left':
+            self.rect.x-=5
+        elif direction=='right':
+            self.rect.x+=5
+        elif direction=='down':
+            self.rect.y+=5
+
         self.image = self.hoja.subsurface(self.hoja.get_clip())
  
     def handle_event(self):
