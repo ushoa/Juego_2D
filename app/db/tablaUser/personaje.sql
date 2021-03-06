@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `PERSONAJE` (
   `ENE` INT(9),
   `X` INT(5),
   `Y` INT(5),
-  `MAPA_X` TEXT(3),
-  `MAPA_Y` TEXT(3),
+  `MAPA_X` INT(3),
+  `MAPA_Y` INT(3),
   PRIMARY KEY (`NOMBRE`)
 )
