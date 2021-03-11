@@ -7,9 +7,8 @@ import sqlite3
 from .read import  nombreSinExtencion
 
 class Conexion():
-    def __init__(self):
-        self.__db=nombreDB
-        self._conn=sqlite3.connect(f'app/db/{self.__db}')
+    def __init__(self,db=nombreDB):
+        self._conn=sqlite3.connect(f'app/db/{db}')
         self._cursor=self._conn.cursor()
 
     def close(self): self._conn.close()

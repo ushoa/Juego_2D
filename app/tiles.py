@@ -21,7 +21,6 @@ class Cursor(pygame.Rect):
     def update(self):
         self.left,self.top=pygame.mouse.get_pos()
 
-
 class Panel(pygame.Surface):
     def __init__(self,whidth,height,x,y,color):
         super().__init__((whidth,height))
