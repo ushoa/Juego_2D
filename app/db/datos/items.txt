@@ -31,8 +31,8 @@
 (44, 'ARCO LARGO HIERRO', 'ARMA', 'MEDIANA', 'ARCO', 2, +0, +0, +0, +0, +150, +0, +0, +7, +0, +0, +0, +90000, 70, 'A','arco_5');
 (45, 'ARCO LARGO ACERO', 'ARMA', 'MEDIANA', 'ARCO', 2, +0, +0, +0, +0, +450, +0, +0, +8, +0, +0, +0, +180000, 80, 'S','arco_6');
 (46, 'ARCO LARGO DIAMANTE', 'ARMA', 'MEDIANA', 'ARCO', 2, +0, +0, +0, +0, +700, +0, +0, +10, +10, +10, +10, +1500000, 80, 'S','arco_7');
-(50, 'GUANTES DE CUERO', 'ARMADURA', 'LIVIANA', 'GUANTES', 1, +0, +0, +0, +0, +0, +2, +0, +0, +0, +0, +0, +10, 1, 'NINGUNA','guantes_cuero');
-(51, 'PECHERA DE CUERO', 'ARMADURA', 'LIVIANA', 'PECHERA', 1, +0, +0, +0, +0, +0, +5, +0, +0, +0, +0, +0, +25, 1, 'NINGUNA','pechera_cuero');
-(52, 'CASCO DE CUERO', 'ARMADURA', 'LIVIANA', 'CASCO', 1, +0, +0, +0, +0, +0, +3, +0, +0, +0, +0, +0, +20, 1, 'NINGUNA','casco_cuero');
-(53, 'BOTAS DE CUERO', 'ARMADURA', 'LIVIANA', 'BOTAS', 1, +0, +0, +0, +0, +0, +2, +0, +0, +0, +0, +0, +10, 1, 'NINGUNA','botas_cuero');
-(54, 'PANTALON DE CUERO', 'ARMADURA', 'LIVIANA', 'PANTALON', 1, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, 1, 'NINGUNA','pantalon_cuero');
+(50, 'GUANTES DE CUERO', 'GUANTES', 'LIVIANA', 'ARMADURA', 1, +0, +0, +0, +0, +0, +2, +0, +0, +0, +0, +0, +10, 1, 'NINGUNA','guantes_cuero');
+(51, 'PECHERA DE CUERO', 'PECHERA', 'LIVIANA', 'ARMADURA', 1, +0, +0, +0, +0, +0, +5, +0, +0, +0, +0, +0, +25, 1, 'NINGUNA','pechera_cuero');
+(52, 'CASCO DE CUERO', 'CASCO', 'LIVIANA', 'ARMADURA', 1, +0, +0, +0, +0, +0, +3, +0, +0, +0, +0, +0, +20, 1, 'NINGUNA','casco_cuero');
+(53, 'BOTAS DE CUERO', 'BOTAS', 'LIVIANA', 'ARMADURA', 1, +0, +0, +0, +0, +0, +2, +0, +0, +0, +0, +0, +10, 1, 'NINGUNA','botas_cuero');
+(54, 'PANTALON DE CUERO', 'PANTALON', 'LIVIANA', 'ARMADURA', 1, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, +0, 1, 'NINGUNA','pantalon_cuero');

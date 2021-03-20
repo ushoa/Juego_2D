@@ -17,7 +17,7 @@ class Menu():
         self.items=[]
         self.estado=True
 
-        self.retorno=(0,0)
+        self.retorno=''
 
     def getEstado(self):
         return self.estado
@@ -63,7 +63,6 @@ class Menu():
             try:
                 self.estado=btn['funcion'].getEstado()
                 self.retorno=btn['funcion'].getDatosPersonaje()
-                print(self.estado,self.retorno)
             except:
                 pass
 
@@ -104,9 +103,9 @@ class MenuPrincipal(Menu):
 
     def getRetorno(self):
         for item in self.items:
-            if item['funcion'].datosPersonaje!=(0,0):
+            if item['funcion'].datosPersonaje!='':
                 return item['funcion'].datosPersonaje
-        return (0,0)
+        return ''
 
 class Opciones(Menu):
     def __init__(self):
@@ -117,7 +116,7 @@ class Opciones(Menu):
         self.color=(136,121,140)
         super().__init__(config.ventana,self.width,self.height,self.x,self.y,self.color)
         self.accion=True
-        self.datosPersonaje=(0,0)
+        self.datosPersonaje=''
     
     def getAccion(self):
         return self.accion
@@ -136,8 +135,8 @@ class opcion_nuevo(Opciones):
         self.crearItems()
 
     def crear(self):
-        nuevo=conexion.CrearPartida(self.items[0]['items'].texto)
-        self.datosPersonaje=nuevo.getPartida()
+        conexion.CrearPartida(self.items[0]['items'].texto)
+        self.datosPersonaje=self.items[0]['items'].texto
         self.estado=False
 
     def selfUpdate(self):
@@ -154,7 +153,7 @@ class opcion_cargar(Opciones):
         self.crearItems()
     
     def cargar(self,nombre):
-        self.datosPersonaje=self.saves.Cargar(nombre)
+        self.datosPersonaje=nombre
         self.estado=False
 
 class opcion_config(Opciones):
