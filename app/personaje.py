@@ -1,7 +1,7 @@
 import sys, pygame
 from math import floor,ceil
 
-from .tiles import SpriteMobile,SpriteStand,Botones,Panel
+from .tiles import SpriteMobile,SpriteStand,Botones,Panel,PanelConTexto,PanelMovible
 from .db import conexion,config
 
 
@@ -53,7 +53,6 @@ class Ente():
         self.setModificador()
         for stats in self.statsClase:
             try:
-                self.statsPrincipales[stats]
                 self.statsPrincipales[stats]=self.statsClase[stats]
             except :
                 pass
@@ -102,20 +101,11 @@ class Enemigo(Ente):
 class Jugador(Ente):
     def __init__(self,nombre):
         self.hoja='cuerpo/'
-        con=conexion.CargarPartida()
-        self.datos=con.Cargar(nombre)
+        con=conexion.CargarPartida(nombre)
+        self.datos=con.Cargar()
         self.dataPersonaje=self.datos[0]
 
         super().__init__(nombre,self.dataPersonaje[0]['ID_CLASE'])
-        
-        for i in range(1,21):
-            self.LVL=i
-            self.setStatsPrincipales()
-            self.setStatSecundarios()
-            print('*********************************')
-            print(f"lvl: {i}, Mod: {self.MOD}")
-            print(self.statsPrincipales)
-            print(self.statsSecundarios)
 
         self.objetos=self.datos[1]
         self.inventario=Inventario(self.objetos)
@@ -140,7 +130,9 @@ class Jugador(Ente):
                 'PECHERA' : SpriteMobile(self.hoja+'torso',self.tiles,self.position) ,
                 'GUANTES' : SpriteMobile(self.hoja+'manos',self.tiles,self.position) ,
                 'BOTAS' : SpriteMobile(self.hoja+'pies',self.tiles,self.position) ,
-                'PANTALON' : SpriteMobile(self.hoja+'piernas',self.tiles,self.position) 
+                'PANTALON' : SpriteMobile(self.hoja+'piernas',self.tiles,self.position),
+                'ARMA' : SpriteMobile(self.hoja+'piernas',self.tiles,self.position),
+                'ESCUDO' : SpriteMobile(self.hoja+'piernas',self.tiles,self.position) 
             }
         ]
         self.sprite=pygame.sprite.Group()
@@ -160,9 +152,7 @@ class Jugador(Ente):
         for arm in self.armadura[0]:
             self.armadura[0][arm].update(direccion)
 
-    def handle_event(self, event):
-        for event in pygame.event.get():
-            pass
+    def handle_event(self, event , cursor):
         if event.type == pygame.KEYDOWN:
            
             if event.key == pygame.K_LEFT:
@@ -199,6 +189,8 @@ class Inventario():
         self.objetos=self.setItemsInventario(objetos)
         self.surface=Panel(200,600,0,0,(29,12,107))
         self.armadura=Armadura(self.objetos,self.surface)
+        self.mochila=Mochila(self.objetos,self.surface)
+        self.panelInfo=''
         self.estado=False
 
     def setItemsInventario(self,objetos):
@@ -213,6 +205,7 @@ class Inventario():
         if self.estado==True:
             self.surface.dibujarPanel(config.ventana)
             self.armadura.dibujarPanel()
+            self.mochila.dibujarPanel()
 
     def cambiarEstado(self):
         if self.estado==False:
@@ -220,33 +213,86 @@ class Inventario():
         else:
             self.estado=False
 
+    def infoItem(self,surface,objeto):
+        x=objeto['sprite'].x+objeto['sprite'].whidth
+        y=objeto['sprite'].y
+        info=f'''
+            Nombre: {objeto['items']['nombre']} Lvl: {objeto['items']['NIVEL']} \n
+            Tipo: {objeto['items']['TIPO']} Equipo: {objeto['items']['EQUIPO']} \n
+            Categoia: {objeto['items']['CATEGORIA']} \n
+        '''
+        self.panelInfo=PanelConTexto(100,100,x,y,(75,72,92),info,(0,0,0),5,5)
+        self.panelInfo.dibujarPanel(surface.getPanel())
+
+
+
 class Mochila():
-    def __init__(self,objetos):
-        pass
+    def __init__(self,objetos,superficie):
+        self.objetos=objetos
+        self.superficie=superficie
+        self.columnas=5
+        self.filas=280//36
+        self.panelMochila=Panel(180,280,(self.superficie.width/2)-90,300,(124,102,221))
+        self.espacios=[]
+        self.setEspacios()
+        self.itemsEnMochila()
+
+    def setEspacios(self):
+        mm=5
+        for f in range(self.filas):
+            fila=[]
+            for c in range(self.columnas):
+                x=mm+(c*(30+mm))
+                y=mm+(f*(30+mm))
+                espacio={'sprite':PanelMovible(30,30,x,y,(0,0,0)),'item':''}
+                fila.append(espacio)
+            self.espacios.append(fila)
+
+    def itemsEnMochila(self):
+        i=0
+        for f in range(len(self.espacios)):
+            for c in range(len(self.espacios[f])):
+                try:
+                    if self.objetos[i]['EQUIPADO']==0:
+                        self.espacios[f][c]['sprite'].color=(75,75,75)
+                        self.espacios[f][c]['item']=self.objetos[i]
+                        #print(self.espacios[f][c])
+                except :
+                    pass
+                i+=1
+
+    def dibujarPanel(self):
+        self.panelMochila.dibujarPanel(self.superficie.getPanel())
+        for f in range(len(self.espacios)):
+            for c in range(len(self.espacios[f])):
+                self.espacios[f][c]['sprite'].dibujarPanel(self.panelMochila.getPanel())
+            
 
 class Armadura():
     def __init__(self,objetos,superficie):
         self.superficie=superficie
         self.objetos=objetos
-        self.panelArmaduraStats=Panel(180,200,(self.superficie.width/2)-90,20,(125,125,125))
+        self.panelArmaduraStats=Panel(180,200,(self.superficie.width/2)-90,50,(125,125,125))
         self.panelArmadura=Panel(85,200,4,20,(125,125,125))
         self.stats=Panel(85,200,92,20,(125,125,125))
         dim=30
         self.armadura={
-            'CASCO' : Panel(dim,dim,27,0,(10,10,10)),
-            'PECHERA' : Panel(dim,dim,0,35,(10,10,10)),
-            'GUANTES' : Panel(dim,dim,55,35,(10,10,10)),
-            'BOTAS' : Panel(dim,dim,0,70,(10,10,10)),
-            'PANTALON' : Panel(dim,dim,55,70,(10,10,10)),
-            'ARMA' : Panel(dim,dim,0,105,(10,10,10)),
-            'ESCUDO' : Panel(dim,dim,55,105,(10,10,10))
+            'CASCO' : { 'sprite' : PanelMovible(dim,dim,27,0,(10,10,10)), 'item' : ''},
+            'PECHERA' : { 'sprite' : PanelMovible(dim,dim,0,35,(10,10,10)), 'item' : ''},
+            'GUANTES' : { 'sprite' : PanelMovible(dim,dim,55,35,(10,10,10)), 'item' : ''},
+            'BOTAS' : { 'sprite' : PanelMovible(dim,dim,0,70,(10,10,10)), 'item' : ''},
+            'PANTALON' : { 'sprite' : PanelMovible(dim,dim,55,70,(10,10,10)), 'item' : ''},
+            'ARMA' : { 'sprite' : PanelMovible(dim,dim,0,105,(10,10,10)), 'item' : ''},
+            'ESCUDO' : { 'sprite' : PanelMovible(dim,dim,55,105,(10,10,10)), 'item' : ''}
         }
         self.setArmadura()
 
     def setArmadura(self):
         for o in self.objetos:
             if o['EQUIPADO']==1:
-                self.armadura[o['EQUIPO']].color=(75,75,75)
+                self.armadura[o['EQUIPO']]['sprite'].color=(75,75,75)
+                self.armadura[o['EQUIPO']]['item']=o
+                #print(self.armadura[o['EQUIPO']])
 
     def setItem(self,tipo):
         self.armadura[tipo].color=(10,10,10)
@@ -256,7 +302,7 @@ class Armadura():
         self.panelArmaduraStats.dibujarPanel(self.superficie.getPanel())
         self.panelArmadura.dibujarPanel(self.panelArmaduraStats.getPanel())
         for s in self.armadura:
-            self.armadura[s].dibujarPanel(self.panelArmadura.getPanel())
+            self.armadura[s]['sprite'].dibujarPanel(self.panelArmadura.getPanel())
 
         
 

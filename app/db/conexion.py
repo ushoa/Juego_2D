@@ -116,37 +116,33 @@ class Conexion():
         return array
 
 class CargarPartida(Conexion):
-    def __init__(self):
+    def __init__(self,nombre=''):
+        self.nombre=nombre
         super().__init__()
         self.partidas=[]
         for save in listdir(dirSave):
             self.partidas.append(nombreSinExtencion(save))
     
-    def Cargar(self,nombre):
-        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
-        self._cursor=self._conn.cursor()
-        p=self.getAll('PERSONAJE')
-        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
-        self._cursor=self._conn.cursor()
-        i=self.getAll('INVENTARIO')
-        self.close()
-        return (p,i)
-
-class CrearPartida(Conexion):
-    def __init__(self,nombre):
-        super().__init__()
-        self.nombre=nombre
-        self._conn=sqlite3.connect(f'app/db/save/{nombre}')
+    def crear(self):
+        self._conn=sqlite3.connect(f'app/db/save/{self.nombre}')
         self._cursor=self._conn.cursor()
         self.crearTablas(dirUserTabla)
-        self._cursor.execute(f"INSERT OR IGNORE INTO PERSONAJE VALUES ('{nombre}',1,0,1,0,0,400,212,2,2)")
+        self._cursor.execute(f"INSERT OR IGNORE INTO PERSONAJE VALUES ('{self.nombre}',1,0,1,0,0,400,212,2,2)")
         self._cursor.execute("INSERT OR IGNORE INTO INVENTARIO VALUES (0,200,0,0)")
         self._conn.commit()
     
-    def getPartida(self):
+    def Cargar(self):
+        self._conn=sqlite3.connect(f'app/db/save/{self.nombre}')
+        self._cursor=self._conn.cursor()
         p=self.getAll('PERSONAJE')
         self._conn=sqlite3.connect(f'app/db/save/{self.nombre}')
         self._cursor=self._conn.cursor()
         i=self.getAll('INVENTARIO')
         self.close()
         return (p,i)
+
+    def update(self,tabla,columna,id,valor):
+        self._conn=sqlite3.connect(f'app/db/save/{self.nombre}')
+        self._cursor=self._conn.cursor()
+        self._cursor.execute(f"UPDATE {tabla} SET {columna} = {valor} WHERE {id} = {valor}")
+        self._conn.commit()

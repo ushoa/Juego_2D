@@ -39,16 +39,16 @@ class Stage():
         self.pj.dibujarJugador(self.lugarMapa.getPanel())
         self.pj.inventario.mostrar()
 
-    def update(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if self.mp.getEstado():
-                self.menuPrincipal(event)
-            else:
-                self.pantallaCarga()
-                self.juego()
+    def update(self,event):
+        #for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if self.mp.getEstado():
+            self.menuPrincipal(event)
+        else:
+            self.pantallaCarga()
+            self.juego()
 
-                self.pj.handle_event(event)
+            self.pj.handle_event(event,self.cursor)
     

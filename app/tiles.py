@@ -40,6 +40,17 @@ class Panel(pygame.Surface):
         stage.blit(self.panel,(self.x,self.y))
         self.panel.fill(self.color)
 
+class PanelMovible(Panel):
+    def __init__(self,whidth,height,x,y,color):
+        super().__init__(whidth,height,x,y,color)
+
+    def update(self,event,cursor):
+        colicion=cursor.colliderect(self.rect)
+        if colicion:
+            if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                self.rect.x=pygame.mouse.get_pos()[0]
+                self.rect.y=pygame.mouse.get_pos()[1]
+
 class PanelConTexto(Panel):
     def __init__(self,whidth,height,x,y,color,texto,textoColor,textoX,textoY):
         super().__init__(whidth,height,x,y,color)
@@ -103,7 +114,6 @@ class Input(pygame.Rect):
             else:
                 self.texto += event.unicode
         self.texto_show=self.fuente.render(self.texto,True,(255,255,255))
-
 
 class Botones(pygame.Rect):
     def __init__(self,texto,stage,x,y,ancho,alto,color):

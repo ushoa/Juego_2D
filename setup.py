@@ -14,10 +14,17 @@ fps=pygame.time.Clock()
 
 stage=stage.Stage()
 
-config.ventana.fill((50,50,100))
-while True:
+cursor=tiles.Cursor()
+pj=personaje.Jugador('Ushoa')
 
-    stage.update()
+while True:
+    config.ventana.fill((50,50,100))
+    pj.dibujarJugador(config.ventana)
+    for event in pygame.event.get():
+        pass
+#        stage.update(event)
+    pj.handle_event(event,cursor)
+
     fps.tick(60)
     pygame.display.set_caption(f'Juego en "2D"{fps}')
     pygame.display.flip()
